@@ -95,7 +95,7 @@
       .sections {
         display: grid;
         gap: clamp(3.5rem, 11vh, 7rem);
-        margin-top: clamp(13.5rem, 43vh, 28rem);
+        margin-top: max(15.5rem, 47vh);
       }
 
       .section {
@@ -110,10 +110,44 @@
       }
 
       .about-copy {
-        max-width: 38ch;
+        width: min(100%, 38rem);
         margin: 1rem 0 0;
         color: var(--muted);
         line-height: 1.65;
+        text-align: left;
+      }
+
+      .about-copy p,
+      .gatonet-copy p {
+        margin: 0;
+      }
+
+      .about-copy p + p,
+      .gatonet-copy p + p {
+        margin-top: 0.9rem;
+      }
+
+      .gatonet-copy {
+        max-width: 38rem;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .gatonet-copy a,
+      .links-list a {
+        color: var(--ink);
+      }
+
+      .links-list {
+        display: grid;
+        gap: 0.75rem;
+        margin-top: 1rem;
+      }
+
+      .links-list a {
+        text-decoration-thickness: 1px;
+        text-underline-offset: 0.18em;
       }
 
       .posts-list {
@@ -230,9 +264,37 @@
       <h1 class="sr-only">Faaaaall</h1>
 
       <div class="sections">
+        <section class="section" aria-label="Gatonet">
+          <div class="gatonet-copy">
+            <p>
+              gatonet é um pequeno espaço independente dedicado a pesquisa em
+              cybersegurança.
+            </p>
+            <p>
+              publicamos pesquisas, anotações tecnicas, e mantemos serviços
+              publicos para a comunidade.
+            </p>
+            <p><a href="https://gatonet.club/">https://gatonet.club/</a></p>
+          </div>
+        </section>
+
         <section class="section" id="about" aria-labelledby="about-title">
           <h2 id="about-title">about</h2>
-          <p class="about-copy">a ser preenchido</p>
+          <div class="about-copy">
+            <p>
+              sou um entusiasta da area de cibersegurança ofensiva, reverse
+              engineering e pwn.
+            </p>
+            <p>
+              sou novo na area, porém quanto mais me aprofundo nos estudos,
+              mais e mais fico interessado nela
+            </p>
+            <p>
+              conhecimento é poder, por isso por onde eu passo tento absorver o
+              maximo de informação e aprendizado. não importa se o curso for
+              broxa (solyd), e não importa se o curso for curto.
+            </p>
+          </div>
         </section>
 
         <section class="section" id="posts" aria-labelledby="posts-title">
@@ -247,6 +309,13 @@
                 >achei uma TV Box e decidi fuçar..</span
               >
             </a>
+          </div>
+        </section>
+
+        <section class="section" id="links" aria-labelledby="links-title">
+          <h2 id="links-title">links</h2>
+          <div class="links-list">
+            <a href="https://github.com/Faaaaall">https://github.com/Faaaaall</a>
           </div>
         </section>
       </div>
