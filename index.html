@@ -1,12 +1,282 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teste GitHub Pages</title>
-</head>
-<body>
-  <h1>OIII 👋</h1>
-  <p>Se você está vendo isso, o GitHub Pages funcionou.</p>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Página pessoal de Faaaaall." />
+    <title>Faaaaall</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --page: #050505;
+        --ink: #f6f6f6;
+        --muted: #bdbdbd;
+        --line: rgba(255, 255, 255, 0.22);
+        --panel: rgba(0, 0, 0, 0.42);
+        --focus: #a8a7ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--page);
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--page);
+        color: var(--ink);
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+
+      .background-poster,
+      .background-video,
+      .background-shade {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .background-poster {
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: var(--page);
+      }
+
+      .background-video {
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: var(--page);
+        opacity: 0;
+        transition: opacity 180ms ease;
+      }
+
+      .background-video.is-ready {
+        opacity: 1;
+      }
+
+      .background-shade {
+        z-index: 2;
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.12) 0%,
+          rgba(0, 0, 0, 0.18) 32%,
+          rgba(0, 0, 0, 0.66) 62%,
+          rgba(0, 0, 0, 0.76) 100%
+        );
+      }
+
+      .site {
+        position: relative;
+        z-index: 3;
+        width: min(100% - 2rem, 44rem);
+        min-height: 100vh;
+        margin: 0 auto;
+        padding: 0 0 4rem;
+      }
+
+      .section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .sections {
+        display: grid;
+        gap: clamp(3.5rem, 11vh, 7rem);
+        margin-top: clamp(13.5rem, 43vh, 28rem);
+      }
+
+      .section {
+        width: min(100%, 38rem);
+        margin: 0 auto;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+
+      .about-copy {
+        max-width: 38ch;
+        margin: 1rem 0 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .posts-list {
+        display: grid;
+        width: 100%;
+        gap: 0.75rem;
+        margin-top: 1rem;
+        text-align: left;
+      }
+
+      .post {
+        display: grid;
+        gap: 0.38rem;
+        border: 1px solid var(--line);
+        border-radius: 0.6rem;
+        background: var(--panel);
+        backdrop-filter: blur(4px);
+        padding: 1rem;
+        color: inherit;
+        cursor: pointer;
+        text-decoration: none;
+        transition: border-color 160ms ease, background 160ms ease,
+          transform 160ms ease;
+      }
+
+      .post:hover {
+        border-color: rgba(255, 255, 255, 0.5);
+        background: rgba(0, 0, 0, 0.58);
+        transform: translateY(-1px);
+      }
+
+      .post-title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .post-title {
+        font-size: 1rem;
+        font-weight: 650;
+      }
+
+      .post-arrow {
+        color: var(--muted);
+        font-size: 1.3rem;
+        font-weight: 400;
+      }
+
+      .post:focus-visible,
+      a:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: -2px;
+      }
+
+      .post-description {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      @media (max-width: 34rem) {
+        .site {
+          width: min(100% - 1.25rem, 44rem);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        .background-video,
+        .post {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <img
+      class="background-poster"
+      src="assets/background-poster.jpg"
+      alt=""
+      aria-hidden="true"
+    />
+    <video
+      class="background-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster="assets/background-poster.jpg"
+      aria-hidden="true"
+    >
+      <source src="assets/background.mp4" type="video/mp4" />
+    </video>
+    <div class="background-shade" aria-hidden="true"></div>
+
+    <main class="site">
+      <h1 class="sr-only">Faaaaall</h1>
+
+      <div class="sections">
+        <section class="section" id="about" aria-labelledby="about-title">
+          <h2 id="about-title">about</h2>
+          <p class="about-copy">a ser preenchido</p>
+        </section>
+
+        <section class="section" id="posts" aria-labelledby="posts-title">
+          <h2 id="posts-title">posts</h2>
+          <div class="posts-list">
+            <a class="post" href="posts/primeiro-post/">
+              <span class="post-title-row">
+                <span class="post-title">título do post</span>
+                <span class="post-arrow" aria-hidden="true">→</span>
+              </span>
+              <span class="post-description">a ser preenchido</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
+    <script>
+      const backgroundVideo = document.querySelector(".background-video");
+      const revealBackgroundVideo = () => {
+        backgroundVideo.classList.add("is-ready");
+      };
+
+      const startBackgroundVideo = () => {
+        backgroundVideo.muted = true;
+        const playback = backgroundVideo.play();
+
+        if (playback) {
+          playback.then(revealBackgroundVideo).catch(() => {
+            // A imagem de capa continua visível se o navegador bloquear autoplay.
+          });
+        }
+      };
+
+      backgroundVideo.addEventListener("playing", revealBackgroundVideo, {
+        once: true,
+      });
+
+      if (backgroundVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+        startBackgroundVideo();
+      } else {
+        backgroundVideo.addEventListener("canplay", startBackgroundVideo, {
+          once: true,
+        });
+      }
+    </script>
+  </body>
 </html>

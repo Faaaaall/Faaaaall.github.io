@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Artigo de Faaaaall." />
+    <title>título do post — Faaaaall</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --page: #050505;
+        --ink: #f6f6f6;
+        --muted: #c9c9c9;
+        --focus: #a8a7ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        min-width: 320px;
+        min-height: 100%;
+        margin: 0;
+        background: var(--page);
+      }
+
+      body {
+        color: var(--ink);
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+
+      .background-poster,
+      .background-video,
+      .background-shade {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .background-poster {
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .background-video {
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 180ms ease;
+      }
+
+      .background-video.is-ready {
+        opacity: 1;
+      }
+
+      .background-shade {
+        z-index: 2;
+        background: rgba(0, 0, 0, 0.82);
+      }
+
+      .article-page {
+        position: relative;
+        z-index: 3;
+        width: min(100% - 2rem, 50rem);
+        min-height: 100vh;
+        margin: 0 auto;
+        padding: clamp(1.25rem, 4vw, 3rem) 0 5rem;
+      }
+
+      .back {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.75rem;
+        color: var(--ink);
+        font-weight: 650;
+        text-decoration: none;
+      }
+
+      .back:hover {
+        color: var(--focus);
+      }
+
+      .back:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 3px;
+      }
+
+      article {
+        max-width: 68ch;
+        margin: clamp(3rem, 12vh, 8rem) auto 0;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2rem, 5vw, 3.6rem);
+        line-height: 1.08;
+      }
+
+      .article-body {
+        margin-top: 2rem;
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.8;
+      }
+
+      .article-body p {
+        margin: 0 0 1.25rem;
+      }
+
+    </style>
+  </head>
+  <body>
+    <img
+      class="background-poster"
+      src="../../assets/background-poster.jpg"
+      alt=""
+      aria-hidden="true"
+    />
+    <video
+      class="background-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster="../../assets/background-poster.jpg"
+      aria-hidden="true"
+    >
+      <source src="../../assets/background.mp4" type="video/mp4" />
+    </video>
+    <div class="background-shade" aria-hidden="true"></div>
+
+    <main class="article-page">
+      <a class="back" href="../../#posts">← voltar</a>
+      <article>
+        <!-- Substitua este título e estes parágrafos pelo conteúdo do artigo. -->
+        <h1>título do post</h1>
+        <div class="article-body">
+          <p>a ser preenchido</p>
+        </div>
+      </article>
+    </main>
+
+    <script>
+      const backgroundVideo = document.querySelector(".background-video");
+      const revealBackgroundVideo = () => {
+        backgroundVideo.classList.add("is-ready");
+      };
+
+      const startBackgroundVideo = () => {
+        backgroundVideo.muted = true;
+        const playback = backgroundVideo.play();
+
+        if (playback) {
+          playback.then(revealBackgroundVideo).catch(() => {
+            // A imagem de capa continua visível se o navegador bloquear autoplay.
+          });
+        }
+      };
+
+      backgroundVideo.addEventListener("playing", revealBackgroundVideo, {
+        once: true,
+      });
+
+      if (backgroundVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+        startBackgroundVideo();
+      } else {
+        backgroundVideo.addEventListener("canplay", startBackgroundVideo, {
+          once: true,
+        });
+      }
+    </script>
+  </body>
+</html>
