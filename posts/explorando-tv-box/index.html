@@ -3,10 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Uma investigação em uma TV Box com especificações bem suspeitas."
-    />
+    <meta name="description" content="Explorando TV Box." />
     <title>Explorando TV Box — Faaaaall</title>
     <style>
       :root {
@@ -130,18 +127,8 @@
         line-height: 1.8;
       }
 
-      .article-body p,
-      .article-body ul {
+      .article-body p {
         margin: 0 0 1.25rem;
-      }
-
-      .article-body ul {
-        padding-left: 1.3rem;
-      }
-
-      .lede {
-        color: var(--ink);
-        font-size: 1.16rem;
       }
 
       figure {
@@ -155,13 +142,6 @@
         border: 1px solid var(--soft);
         border-radius: 0.6rem;
         background: #0a0a0a;
-      }
-
-      figcaption {
-        margin-top: 0.65rem;
-        color: #b7b7b7;
-        font-size: 0.91rem;
-        line-height: 1.5;
       }
 
       figure.meme {
@@ -185,20 +165,17 @@
         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       }
 
-      p code,
-      li code {
+      p code {
         border-radius: 0.25rem;
         background: rgba(255, 255, 255, 0.09);
         padding: 0.08em 0.3em;
         color: #f5f5f5;
       }
 
-      .note {
-        margin: 1.75rem 0;
-        border-left: 3px solid rgba(168, 167, 255, 0.85);
-        background: rgba(168, 167, 255, 0.09);
-        padding: 0.9rem 1rem;
-        color: #e6e5ff;
+      hr {
+        margin: 2rem 0;
+        border: 0;
+        border-top: 1px solid var(--soft);
       }
 
       @media (max-width: 34rem) {
@@ -247,266 +224,279 @@
         <h1>Explorando TV Box</h1>
 
         <div class="article-body">
-          <p class="lede">
-            Tinha visto uns vídeos sobre um tal “pocket lab” ou “pocket
-            server”: pegar uma TV Box meio esquecida e transformar num mini
-            laboratório. Por sorte achei uma dessas em casa. Por azar, quando
-            fui investigar, o negócio era tão falsificado que até o Android
-            parecia estar mentindo KKKKKKK.
+          <p>
+            tinha visto uns videos sobre um tal ''pocket lab'' ou ''pocket
+            server'' que você conseguia a partir de uma TV Box (aquelas box pra
+            TV q vem tudo pirata, vc sabe doq eu to falando)
           </p>
 
           <p>
-            Já pelo visual mais idoso possível eu tinha uma suspeita de que o
-            tal pocket lab não ia sair tão bonito assim. Mesmo assim, decidi ir
-            mais fundo para ver o que dava para tirar dessa TV Box mixuruca.
+            por sorte achei uma dessas na minha casa, mas quando fui
+            investigar..<br />negocio tava tudo falsificado KKKKKKKKK
+          </p>
+
+          <p>
+            sim eu sei que é 0 surpresas uma TV Box estar falsificada, mas po,
+            falsificaram até o Android<br />já de ver que o visual do Android
+            era o mais idoso POSSIVEL eu já desanimei, pq já sabia q não ia
+            mais dar pra fazer o tal ''pocket lab'', porém decidi ir mais a
+            fundo e ir vendo oq consigo fazer nessa TV Box mixuruca
+          </p>
+
+          <h2>Investigando os reais componentes e versões da TV Box</h2>
+
+          <p>
+            depois de ver a porqueira de Android que a TV Box tinha,
+            obviamente quis ir ver se o que tinha na caixa era tudo real mesmo.
           </p>
 
           <figure>
             <img
               src="../../assets/posts/explorando-tv-box/01-caixa-tv-box.webp"
-              alt="Caixa de uma TV Box MXQ Pro 5G anunciando Android 11.1, 64 GB de RAM e 512 GB de armazenamento."
+              alt="Foto da caixa da TV Box."
               width="1600"
               height="1200"
             />
-            <figcaption>
-              64 GB de RAM, 512 GB e Android 11.1… claro que sim.
-            </figcaption>
           </figure>
 
-          <h2>Investigando os reais componentes e versões da TV Box</h2>
+          <p>(certeza que essa porra foi comprada no 25 de maio..... chineses do cacete)</p>
 
           <p>
-            Depois de ver a porqueira de Android que a Box tinha, obviamente
-            fui conferir se o que vinha escrito na caixa era real. Baixei o
-            CPU-Z pelo PC, passei num pendrive e espetei na Box para ver o que
-            aparecia.
+            baixei o CPUZ por um pendrive no PC e espetei pra ver o que eu
+            achava e..
           </p>
 
           <figure>
             <img
               src="../../assets/posts/explorando-tv-box/02-cpu-z-soc.webp"
-              alt="Tela do CPU-Z informando quatro núcleos ARM a 1 GHz e GPU Mali-450 MP."
+              alt="Foto da tela do CPU-Z na TV Box."
               loading="lazy"
             />
-            <figcaption>
-              CPU-Z encontrou quatro núcleos a 1 GHz e uma Mali-450 MP — já
-              não parecia exatamente a máquina da caixa.
-            </figcaption>
           </figure>
 
+          <p>NADA KKKKKKKK NÃO ACHEI NADA</p>
+
           <p>
-            E, em vez de esclarecer tudo, ele mostrou uma ficha técnica que
-            parecia feita para enganar alguém muito distraído: 64 GB de RAM,
-            509 GB de armazenamento e Android 11.1. Ninguém é tão burro de ver
-            esse Android de bosta e achar que qualquer coisa melhor que uma
-            batata cabe nesse sistema aí.
+            oou era isso que eles pensavam que eu iria achar né, pq ninguém é
+            tão burro de ver esse Android de bosta e achar q qualquer coisa
+            melhor q uma batata caiba nesse sistema ai
           </p>
 
           <figure>
             <img
               src="../../assets/posts/explorando-tv-box/03-cpu-z-sistema.webp"
-              alt="Tela de sistema do CPU-Z mostrando alegados 65535 MB de RAM e 509,15 GB de armazenamento interno."
+              alt="Foto da aba de sistema do CPU-Z na TV Box."
               loading="lazy"
             />
-            <figcaption>
-              A ficha técnica da ROM: Android 11.1, 64 GB de RAM e 509 GB de
-              armazenamento. Aham.
-            </figcaption>
           </figure>
 
-          <h2>O Termux já começou dando pista</h2>
+          <p>
+            aqui eu também já duvido que realmente tenha 500GB de
+            Armazenamento, pq a ROM adultera tudo aparentemente, insano..
+          </p>
 
           <p>
-            Enquanto eu tirava o pendrive do PC para colocar na Box, a porta
-            USB traseira simplesmente parou de funcionar. Brutal. Ainda assim,
-            consegui seguir com o Termux — só que a primeira versão não quis
-            nem instalar.
+            bom, acabei de baixar o termux no pendrive aq, vou dar uma fuçada e
+            qualquer coisa volto pra documentar :p
           </p>
+
+          <hr />
+
+          <p>
+            (enquanto eu tava no processo de tirar o pendrive do PC e plugar na
+            Box, a porta USB traseira da Box simplesmente parou de funcionar,
+            brutal)
+          </p>
+
+          <p>O ANDROID NÃO É NEM 11, NEM 7 NEM 5 KKKKKKKKKKK</p>
 
           <figure>
             <img
               src="../../assets/posts/explorando-tv-box/04-termux-incompativel.webp"
-              alt="Mensagem do Android dizendo que o aplicativo Termux não é compatível com o aparelho."
+              alt="Foto de uma mensagem de incompatibilidade ao instalar o Termux."
               loading="lazy"
             />
-            <figcaption>
-              O primeiro APK do Termux recebeu um belo “esta aplicação não é
-              compatível”.
-            </figcaption>
           </figure>
 
           <p>
-            Foi aí que comecei a desconfiar que o Android não era nem 11, nem
-            7, nem 5 do jeito que a interface fazia parecer. Testei a versão de
-            32 bits do Termux e ela foi. Minha teoria passou a ser: a CPU pode
-            até ser 64 bits, mas o Android instalado é 32 bits de verdade.
+            basicamente agora a unica coisa q me restou pensar pra fazer é
+            baixar os de 32bit ARMv8l por causa desse carinha aqui
           </p>
 
-          <h2>O que o sistema realmente diz</h2>
+          <pre><code>Kernel Architecture: armv8l</code></pre>
 
           <p>
-            Com o Termux funcionando — e com acesso root, o que ao menos
-            poupou trabalho — comecei a perguntar diretamente para o sistema o
-            que ele dizia ser.
+            já que a ROM mente tanto, nem sei se devo acreditar nem que a Box
+            existe por si só<br />mas ja q a gente ta considerando q a ROM é
+            bem mentirosinha, vamo parar de testar 64bits e ver nos 32.
           </p>
 
-          <pre><code>$ getprop ro.build.version.release
-11.1
-
-$ getprop ro.build.version.sdk
-25
-
-$ getprop ro.build.fingerprint
-Amlogic/p282/p282:7.1.2/NHG47L/20220424:user/test-keys
-
-$ uname -m
-armv8l
-
-$ getprop ro.product.cpu.abi
-armeabi-v7a</code></pre>
+          <hr />
 
           <p>
-            O <code>11.1</code> continua sendo o que a ROM jura que é. Já o
-            SDK <code>25</code> normalmente corresponde ao Android 7.1, e o
-            fingerprint também se identifica como <code>7.1.2</code>. A ABI
-            principal dos apps é <code>armeabi-v7a</code>, então faz sentido a
-            versão de 32 bits do Termux ter sido a que funcionou.
+            acabei de baixar o Termux na versão 32 bits e foi<br />minha teoria
+            é que:<br />a CPU provavelmente seja 64bits, já o Android seja
+            32bits de fato<br />e a unica arquitetura que eu descobri até agora
+            que é aceita é a <code>armeabi-v7a</code>
+          </p>
+
+          <p>
+            agora que já tenho o Termux instalado (finalmente), chegou a hora
+            de descobrir o que realmente tem aqui.<br />por sorte a TV Box veio
+            com acesso ao root, ou seja é menos trabalho e dor de cabeça :p
+          </p>
+
+          <hr />
+
+          <h3>Tudo o que eu rodei e descobri:</h3>
+
+          <p>
+            vamos ver qual versão do Android a ROM jura que é com<br />
+            <code>getprop ro.build.version.release</code><br />
+            <code>11.1</code>
+          </p>
+
+          <p>sem surpresas, se vc leu até aqui de fato já sabia disso</p>
+
+          <p>
+            agora vamos ver a real versão do Android com<br />
+            <code>getprop ro.build.version.sdk</code><br />
+            <code>25</code>
+          </p>
+
+          <p>tive que dar mais uma pesquisadinha e aparentemente</p>
+
+          <pre><code>19 = Android 4.4
+21 = Android 5.0
+22 = Android 5.1
+23 = Android 6.0
+24/25 = Android 7
+26/27 = Android 8
+28 = Android 9
+29 = Android 10
+30 = Android 11</code></pre>
+
+          <p>na caixinha dizia 11.1 kkkkkk, brutal</p>
+
+          <p>
+            agora, vamos dar uma olhada em qual ROM ou Build foi usada pra essa
+            porcaria com<br /><code>getprop ro.build.fingerprint</code><br />
+            <code>Amlogic/p282/p282:7.1.2/NHG47L/20220424:user/test-keys</code>
+          </p>
+
+          <p>buildzona generica</p>
+
+          <p>
+            bora ver a arquitetura do kernel<br /><code>uname -m</code><br />
+            <code>armv81</code>
+          </p>
+
+          <p>
+            agora quais tipos de apps o sistema aceita<br />
+            <code>getpropr ro.product.cpu.abi</code><br />
+            <code>armeabi-v7a</code>
+          </p>
+
+          <p>
+            sem surpresas, só consegui baixar o Termux usando a versão pra
+            Android 7 armeabiv7a, ent meio q a gente ja sabia disso
+          </p>
+
+          <h3>então</h3>
+
+          <p>cenario mais provavel:</p>
+
+          <pre><code>CPU fisico: acho q ARMv8/64-bit
+android instalado: 32bit
+ABI principal dos app: armeabi-v7a
+android real: 7.1.2
+API: 25
+board: p282
+soc/familia: Amlogic</code></pre>
+
+          <h3>vendo o armazenamento</h3>
+
+          <p>
+            usando <code>df -h</code> pra ver as partições e o tamanho de cada
+            uma, a gente acha isso:
           </p>
 
           <figure>
             <img
               src="../../assets/posts/explorando-tv-box/05-termux-fingerprint-e-armazenamento.webp"
-              alt="Terminal do Termux com fingerprint Amlogic p282 Android 7.1.2, arquitetura armv8l, ABI armeabi-v7a e início do comando df -h."
+              alt="Foto da saída de comandos no Termux."
               loading="lazy"
             />
-            <figcaption>
-              O fingerprint entrega Android 7.1.2; a ABI dos apps é
-              <code>armeabi-v7a</code>.
-            </figcaption>
           </figure>
-
-          <div class="note">
-            Como a ROM já adulterou vários dados, nada disso é uma certidão de
-            nascimento da Box. Mas, juntando as pistas, esse é o cenário mais
-            plausível até agora.
-          </div>
-
-          <h3>Então</h3>
-          <ul>
-            <li>CPU física: aparenta ser ARMv8, capaz de 64 bits;</li>
-            <li>Android instalado: 32 bits;</li>
-            <li>ABI principal dos apps: <code>armeabi-v7a</code>;</li>
-            <li>Android informado pelo sistema: 7.1.2, API 25;</li>
-            <li>board: <code>p282</code>;</li>
-            <li>família do SoC: Amlogic.</li>
-          </ul>
-
-          <h2>Armazenamento: a outra mentira</h2>
-
-          <p>
-            Com <code>df -h</code>, a realidade ficou bem menos glamourosa. A
-            partição <code>/data</code> aparece com só 4,2 GB; o volume de 7,1
-            GB que também aparece no terminal é o pendrive montado separado.
-            Então aqueles “512 GB” da tela são, no mínimo, criatividade pura.
-          </p>
-
-          <figure>
-            <img
-              src="../../assets/posts/explorando-tv-box/05-termux-fingerprint-e-armazenamento.webp"
-              alt="Saída do comando df -h no Termux mostrando a partição data com 4,2 GB e um pendrive montado com 7,1 GB."
-              loading="lazy"
-            />
-            <figcaption>
-              Na prática, <code>/data</code> tem só 4,2 GB. Os 7,1 GB em
-              <code>/storage/D466-3E9B</code> são o pendrive.
-            </figcaption>
-          </figure>
-
-          <p>
-            Eu ainda tinha uma pequena esperança de ser pelo menos 20 GB ou 50
-            GB. Mas nem isso.
-          </p>
 
           <figure class="meme">
             <img
               src="../../assets/posts/explorando-tv-box/06-reacao.webp"
-              alt="Imagem de reação decepcionada."
+              alt="Imagem de reação."
               loading="lazy"
             />
           </figure>
 
-          <h2>E a RAM?</h2>
-
           <p>
-            O CPU-Z já tinha jurado que existiam quase 64 GB de RAM. Para
-            deixar tudo ainda mais estranho, <code>/proc/meminfo</code> também
-            mostrou um número absurdo — cerca de 64 GiB. A ROM aparentemente
-            conseguiu maquiar até essa leitura.
+            po, eu sei q essa ROM mentiu sobre tudo basicamente, mas eu ainda
+            tinha uma pequena esperança de ser pelo menos 20 giga ou 50, mas
+            nem isso é, é 12<br /><strong>(8 livre mas 4 com o android de bosta)</strong>
           </p>
+
+          <h3>agora vamo ver a RAM</h3>
 
           <figure>
             <img
               src="../../assets/posts/explorando-tv-box/07-termux-meminfo.webp"
-              alt="Terminal mostrando MemTotal de 67107840 kB no arquivo proc meminfo."
+              alt="Foto da saída de memória no Termux."
               loading="lazy"
             />
-            <figcaption>
-              Até <code>/proc/meminfo</code> foi maquiado para mostrar algo
-              perto de 64 GB.
-            </figcaption>
           </figure>
 
-          <p>
-            Pelo menos uma coisa bateu com o CPU-Z: na linha de boot aparece
-            <code>maxcpus=4</code>.
-          </p>
+          <p>:( to muito triste que ela não tem 64GB de RAM</p>
+
+          <p>vamo ver quanto essa danada tem de verdade</p>
 
           <figure>
             <img
               src="../../assets/posts/explorando-tv-box/08-termux-cmdline-maxcpus.webp"
-              alt="Terminal mostrando a linha de comando de inicialização com maxcpus igual a quatro."
+              alt="Foto da linha de inicialização no Termux."
               loading="lazy"
             />
-            <figcaption>
-              Ao menos os quatro núcleos aparecem na inicialização.
-            </figcaption>
           </figure>
 
-          <p>
-            A resposta mais pé no chão veio com <code>free -m</code>: cerca de
-            856 MB de RAM e 499 MB de swap. Ou seja, 1 GB de RAM arredondando.
-          </p>
+          <p><code>maxcpus=4</code><br />pelo menos UMA coisa bateu com o CPUZ né??</p>
 
           <figure>
             <img
               src="../../assets/posts/explorando-tv-box/09-termux-memoria-real.webp"
-              alt="Saída do comando free -m mostrando 856 MB de memória e 499 MB de swap."
+              alt="Foto da saída do comando free no Termux."
               loading="lazy"
             />
-            <figcaption>
-              O <code>free</code> entregou o tamanho menos glamouroso: cerca
-              de 856 MB de RAM e 499 MB de swap.
-            </figcaption>
           </figure>
 
+          <p>1 DE RAM? 1 DE RAM ARREDONDANDO AINDA?<br />500MB DE SWAP?</p>
+
+          <p>desisto de fuçar nessa porra :p</p>
+
+          <p>desisto de fuçar nessa porra :p</p>
+
+          <hr />
+
+          <h2>resultado</h2>
+
           <p>
-            1 DE RAM? 1 DE RAM ARREDONDANDO AINDA? 500 MB DE SWAP? Desisto de
-            fuçar nessa porra :p
+            sim, da pra usar de servidor, mas um bem fraquinho, bem fraquinho,
+            MUITO FRACO MESMO<br />acho que vai dar pra rodar um servicinho aqui
+            ou acola, mas duvido muito que eu vá realmente utilizar isso
           </p>
 
-          <h2>Resultado</h2>
+          <hr />
 
           <p>
-            Sim, ainda dá para usar de servidor — mas um bem fraquinho,
-            fraquinho, MUITO FRACO MESMO. Talvez aguente um servicinho aqui ou
-            acolá, mas eu duvido que vá virar algo que eu realmente use no dia
-            a dia.
-          </p>
-
-          <p>
-            Esse foi só o primeiro relatório do experimento. Ainda tenho um HD
-            que pretendo instalar nela e aí, FINALMENTE (talvez), fazer o
-            pocket server de verdade.
+            esse foi só o primeiro relatorio do meu experimento com esse lab!
+            ainda tenho um HD q pretendo instalar nele e assim FINALMENTE
+            (talvez) fazer o pocket server pra mim
           </p>
         </div>
       </article>
