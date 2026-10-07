@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Uma investigação em uma TV Box com especificações bem suspeitas."
+    />
+    <title>Explorando TV Box — Faaaaall</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --page: #050505;
+        --ink: #f6f6f6;
+        --muted: #d0d0d0;
+        --soft: rgba(255, 255, 255, 0.12);
+        --panel: rgba(0, 0, 0, 0.42);
+        --focus: #a8a7ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        min-width: 320px;
+        min-height: 100%;
+        margin: 0;
+        background: var(--page);
+      }
+
+      body {
+        color: var(--ink);
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+
+      .background-poster,
+      .background-video,
+      .background-shade {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .background-poster {
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .background-video {
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 180ms ease;
+      }
+
+      .background-video.is-ready {
+        opacity: 1;
+      }
+
+      .background-shade {
+        z-index: 2;
+        background: rgba(0, 0, 0, 0.84);
+      }
+
+      .article-page {
+        position: relative;
+        z-index: 3;
+        width: min(100% - 2rem, 54rem);
+        min-height: 100vh;
+        margin: 0 auto;
+        padding: clamp(1.25rem, 4vw, 3rem) 0 5rem;
+      }
+
+      .back {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.75rem;
+        color: var(--ink);
+        font-weight: 650;
+        text-decoration: none;
+      }
+
+      .back:hover {
+        color: var(--focus);
+      }
+
+      .back:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 3px;
+      }
+
+      article {
+        max-width: 70ch;
+        margin: clamp(3rem, 12vh, 8rem) auto 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: var(--ink);
+        line-height: 1.15;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2rem, 5vw, 3.6rem);
+      }
+
+      h2 {
+        margin: 3.8rem 0 1.15rem;
+        font-size: clamp(1.35rem, 3vw, 1.8rem);
+      }
+
+      h3 {
+        margin: 2.5rem 0 1rem;
+        font-size: 1.2rem;
+      }
+
+      .article-body {
+        margin-top: 2rem;
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.8;
+      }
+
+      .article-body p,
+      .article-body ul {
+        margin: 0 0 1.25rem;
+      }
+
+      .article-body ul {
+        padding-left: 1.3rem;
+      }
+
+      .lede {
+        color: var(--ink);
+        font-size: 1.16rem;
+      }
+
+      figure {
+        margin: 2rem 0;
+      }
+
+      figure img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--soft);
+        border-radius: 0.6rem;
+        background: #0a0a0a;
+      }
+
+      figcaption {
+        margin-top: 0.65rem;
+        color: #b7b7b7;
+        font-size: 0.91rem;
+        line-height: 1.5;
+      }
+
+      figure.meme {
+        width: min(100%, 18rem);
+        margin-inline: auto;
+      }
+
+      pre {
+        overflow-x: auto;
+        margin: 1.5rem 0;
+        border: 1px solid var(--soft);
+        border-radius: 0.6rem;
+        background: var(--panel);
+        padding: 1rem;
+        color: #ededed;
+        font: 0.91rem/1.65 ui-monospace, SFMono-Regular, Menlo, Consolas,
+          monospace;
+      }
+
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      p code,
+      li code {
+        border-radius: 0.25rem;
+        background: rgba(255, 255, 255, 0.09);
+        padding: 0.08em 0.3em;
+        color: #f5f5f5;
+      }
+
+      .note {
+        margin: 1.75rem 0;
+        border-left: 3px solid rgba(168, 167, 255, 0.85);
+        background: rgba(168, 167, 255, 0.09);
+        padding: 0.9rem 1rem;
+        color: #e6e5ff;
+      }
+
+      @media (max-width: 34rem) {
+        .article-page {
+          width: min(100% - 1.25rem, 54rem);
+        }
+
+        pre {
+          margin-inline: -0.1rem;
+          font-size: 0.8rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .background-video {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <img
+      class="background-poster"
+      src="../../assets/background-poster.jpg"
+      alt=""
+      aria-hidden="true"
+    />
+    <video
+      class="background-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster="../../assets/background-poster.jpg"
+      aria-hidden="true"
+    >
+      <source src="../../assets/background.mp4" type="video/mp4" />
+    </video>
+    <div class="background-shade" aria-hidden="true"></div>
+
+    <main class="article-page">
+      <a class="back" href="../../#posts">← voltar</a>
+
+      <article>
+        <h1>Explorando TV Box</h1>
+
+        <div class="article-body">
+          <p class="lede">
+            Tinha visto uns vídeos sobre um tal “pocket lab” ou “pocket
+            server”: pegar uma TV Box meio esquecida e transformar num mini
+            laboratório. Por sorte achei uma dessas em casa. Por azar, quando
+            fui investigar, o negócio era tão falsificado que até o Android
+            parecia estar mentindo KKKKKKK.
+          </p>
+
+          <p>
+            Já pelo visual mais idoso possível eu tinha uma suspeita de que o
+            tal pocket lab não ia sair tão bonito assim. Mesmo assim, decidi ir
+            mais fundo para ver o que dava para tirar dessa TV Box mixuruca.
+          </p>
+
+          <figure>
+            <img
+              src="../../assets/posts/explorando-tv-box/01-caixa-tv-box.webp"
+              alt="Caixa de uma TV Box MXQ Pro 5G anunciando Android 11.1, 64 GB de RAM e 512 GB de armazenamento."
+              width="1600"
+              height="1200"
+            />
+            <figcaption>
+              64 GB de RAM, 512 GB e Android 11.1… claro que sim.
+            </figcaption>
+          </figure>
+
+          <h2>Investigando os reais componentes e versões da TV Box</h2>
+
+          <p>
+            Depois de ver a porqueira de Android que a Box tinha, obviamente
+            fui conferir se o que vinha escrito na caixa era real. Baixei o
+            CPU-Z pelo PC, passei num pendrive e espetei na Box para ver o que
+            aparecia.
+          </p>
+
+          <figure>
+            <img
+              src="../../assets/posts/explorando-tv-box/02-cpu-z-soc.webp"
+              alt="Tela do CPU-Z informando quatro núcleos ARM a 1 GHz e GPU Mali-450 MP."
+              loading="lazy"
+            />
+            <figcaption>
+              CPU-Z encontrou quatro núcleos a 1 GHz e uma Mali-450 MP — já
+              não parecia exatamente a máquina da caixa.
+            </figcaption>
+          </figure>
+
+          <p>
+            E, em vez de esclarecer tudo, ele mostrou uma ficha técnica que
+            parecia feita para enganar alguém muito distraído: 64 GB de RAM,
+            509 GB de armazenamento e Android 11.1. Ninguém é tão burro de ver
+            esse Android de bosta e achar que qualquer coisa melhor que uma
+            batata cabe nesse sistema aí.
+          </p>
+
+          <figure>
+            <img
+              src="../../assets/posts/explorando-tv-box/03-cpu-z-sistema.webp"
+              alt="Tela de sistema do CPU-Z mostrando alegados 65535 MB de RAM e 509,15 GB de armazenamento interno."
+              loading="lazy"
+            />
+            <figcaption>
+              A ficha técnica da ROM: Android 11.1, 64 GB de RAM e 509 GB de
+              armazenamento. Aham.
+            </figcaption>
+          </figure>
+
+          <h2>O Termux já começou dando pista</h2>
+
+          <p>
+            Enquanto eu tirava o pendrive do PC para colocar na Box, a porta
+            USB traseira simplesmente parou de funcionar. Brutal. Ainda assim,
+            consegui seguir com o Termux — só que a primeira versão não quis
+            nem instalar.
+          </p>
+
+          <figure>
+            <img
+              src="../../assets/posts/explorando-tv-box/04-termux-incompativel.webp"
+              alt="Mensagem do Android dizendo que o aplicativo Termux não é compatível com o aparelho."
+              loading="lazy"
+            />
+            <figcaption>
+              O primeiro APK do Termux recebeu um belo “esta aplicação não é
+              compatível”.
+            </figcaption>
+          </figure>
+
+          <p>
+            Foi aí que comecei a desconfiar que o Android não era nem 11, nem
+            7, nem 5 do jeito que a interface fazia parecer. Testei a versão de
+            32 bits do Termux e ela foi. Minha teoria passou a ser: a CPU pode
+            até ser 64 bits, mas o Android instalado é 32 bits de verdade.
+          </p>
+
+          <h2>O que o sistema realmente diz</h2>
+
+          <p>
+            Com o Termux funcionando — e com acesso root, o que ao menos
+            poupou trabalho — comecei a perguntar diretamente para o sistema o
+            que ele dizia ser.
+          </p>
+
+          <pre><code>$ getprop ro.build.version.release
+11.1
+
+$ getprop ro.build.version.sdk
+25
+
+$ getprop ro.build.fingerprint
+Amlogic/p282/p282:7.1.2/NHG47L/20220424:user/test-keys
+
+$ uname -m
+armv8l
+
+$ getprop ro.product.cpu.abi
+armeabi-v7a</code></pre>
+
+          <p>
+            O <code>11.1</code> continua sendo o que a ROM jura que é. Já o
+            SDK <code>25</code> normalmente corresponde ao Android 7.1, e o
+            fingerprint também se identifica como <code>7.1.2</code>. A ABI
+            principal dos apps é <code>armeabi-v7a</code>, então faz sentido a
+            versão de 32 bits do Termux ter sido a que funcionou.
+          </p>
+
+          <figure>
+            <img
+              src="../../assets/posts/explorando-tv-box/05-termux-fingerprint-e-armazenamento.webp"
+              alt="Terminal do Termux com fingerprint Amlogic p282 Android 7.1.2, arquitetura armv8l, ABI armeabi-v7a e início do comando df -h."
+              loading="lazy"
+            />
+            <figcaption>
+              O fingerprint entrega Android 7.1.2; a ABI dos apps é
+              <code>armeabi-v7a</code>.
+            </figcaption>
+          </figure>
+
+          <div class="note">
+            Como a ROM já adulterou vários dados, nada disso é uma certidão de
+            nascimento da Box. Mas, juntando as pistas, esse é o cenário mais
+            plausível até agora.
+          </div>
+
+          <h3>Então</h3>
+          <ul>
+            <li>CPU física: aparenta ser ARMv8, capaz de 64 bits;</li>
+            <li>Android instalado: 32 bits;</li>
+            <li>ABI principal dos apps: <code>armeabi-v7a</code>;</li>
+            <li>Android informado pelo sistema: 7.1.2, API 25;</li>
+            <li>board: <code>p282</code>;</li>
+            <li>família do SoC: Amlogic.</li>
+          </ul>
+
+          <h2>Armazenamento: a outra mentira</h2>
+
+          <p>
+            Com <code>df -h</code>, a realidade ficou bem menos glamourosa. A
+            partição <code>/data</code> aparece com só 4,2 GB; o volume de 7,1
+            GB que também aparece no terminal é o pendrive montado separado.
+            Então aqueles “512 GB” da tela são, no mínimo, criatividade pura.
+          </p>
+
+          <figure>
+            <img
+              src="../../assets/posts/explorando-tv-box/05-termux-fingerprint-e-armazenamento.webp"
+              alt="Saída do comando df -h no Termux mostrando a partição data com 4,2 GB e um pendrive montado com 7,1 GB."
+              loading="lazy"
+            />
+            <figcaption>
+              Na prática, <code>/data</code> tem só 4,2 GB. Os 7,1 GB em
+              <code>/storage/D466-3E9B</code> são o pendrive.
+            </figcaption>
+          </figure>
+
+          <p>
+            Eu ainda tinha uma pequena esperança de ser pelo menos 20 GB ou 50
+            GB. Mas nem isso.
+          </p>
+
+          <figure class="meme">
+            <img
+              src="../../assets/posts/explorando-tv-box/06-reacao.webp"
+              alt="Imagem de reação decepcionada."
+              loading="lazy"
+            />
+          </figure>
+
+          <h2>E a RAM?</h2>
+
+          <p>
+            O CPU-Z já tinha jurado que existiam quase 64 GB de RAM. Para
+            deixar tudo ainda mais estranho, <code>/proc/meminfo</code> também
+            mostrou um número absurdo — cerca de 64 GiB. A ROM aparentemente
+            conseguiu maquiar até essa leitura.
+          </p>
+
+          <figure>
+            <img
+              src="../../assets/posts/explorando-tv-box/07-termux-meminfo.webp"
+              alt="Terminal mostrando MemTotal de 67107840 kB no arquivo proc meminfo."
+              loading="lazy"
+            />
+            <figcaption>
+              Até <code>/proc/meminfo</code> foi maquiado para mostrar algo
+              perto de 64 GB.
+            </figcaption>
+          </figure>
+
+          <p>
+            Pelo menos uma coisa bateu com o CPU-Z: na linha de boot aparece
+            <code>maxcpus=4</code>.
+          </p>
+
+          <figure>
+            <img
+              src="../../assets/posts/explorando-tv-box/08-termux-cmdline-maxcpus.webp"
+              alt="Terminal mostrando a linha de comando de inicialização com maxcpus igual a quatro."
+              loading="lazy"
+            />
+            <figcaption>
+              Ao menos os quatro núcleos aparecem na inicialização.
+            </figcaption>
+          </figure>
+
+          <p>
+            A resposta mais pé no chão veio com <code>free -m</code>: cerca de
+            856 MB de RAM e 499 MB de swap. Ou seja, 1 GB de RAM arredondando.
+          </p>
+
+          <figure>
+            <img
+              src="../../assets/posts/explorando-tv-box/09-termux-memoria-real.webp"
+              alt="Saída do comando free -m mostrando 856 MB de memória e 499 MB de swap."
+              loading="lazy"
+            />
+            <figcaption>
+              O <code>free</code> entregou o tamanho menos glamouroso: cerca
+              de 856 MB de RAM e 499 MB de swap.
+            </figcaption>
+          </figure>
+
+          <p>
+            1 DE RAM? 1 DE RAM ARREDONDANDO AINDA? 500 MB DE SWAP? Desisto de
+            fuçar nessa porra :p
+          </p>
+
+          <h2>Resultado</h2>
+
+          <p>
+            Sim, ainda dá para usar de servidor — mas um bem fraquinho,
+            fraquinho, MUITO FRACO MESMO. Talvez aguente um servicinho aqui ou
+            acolá, mas eu duvido que vá virar algo que eu realmente use no dia
+            a dia.
+          </p>
+
+          <p>
+            Esse foi só o primeiro relatório do experimento. Ainda tenho um HD
+            que pretendo instalar nela e aí, FINALMENTE (talvez), fazer o
+            pocket server de verdade.
+          </p>
+        </div>
+      </article>
+    </main>
+
+    <script>
+      const backgroundVideo = document.querySelector(".background-video");
+      const revealBackgroundVideo = () => {
+        backgroundVideo.classList.add("is-ready");
+      };
+
+      const startBackgroundVideo = () => {
+        backgroundVideo.muted = true;
+        const playback = backgroundVideo.play();
+
+        if (playback) {
+          playback.then(revealBackgroundVideo).catch(() => {
+            // A imagem de capa continua visível se o navegador bloquear autoplay.
+          });
+        }
+      };
+
+      backgroundVideo.addEventListener("playing", revealBackgroundVideo, {
+        once: true,
+      });
+
+      if (backgroundVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+        startBackgroundVideo();
+      } else {
+        backgroundVideo.addEventListener("canplay", startBackgroundVideo, {
+          once: true,
+        });
+      }
+    </script>
+  </body>
+</html>
