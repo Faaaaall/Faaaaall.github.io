@@ -67,6 +67,8 @@
 
       .background-shade {
         z-index: 2;
+        --reading-darkness: 0;
+        --reading-blur: 0px;
         background: linear-gradient(
           to bottom,
           rgba(0, 0, 0, 0.12) 0%,
@@ -74,13 +76,18 @@
           rgba(0, 0, 0, 0.66) 62%,
           rgba(0, 0, 0, 0.76) 100%
         );
-        transition: background 180ms ease, backdrop-filter 180ms ease;
       }
 
-      body.is-reading .background-shade {
-        background: rgba(0, 0, 0, 0.9);
-        -webkit-backdrop-filter: blur(12px);
-        backdrop-filter: blur(12px);
+      .background-shade::after {
+        position: absolute;
+        inset: 0;
+        content: "";
+        background: rgba(0, 0, 0, 0.78);
+        opacity: var(--reading-darkness);
+        -webkit-backdrop-filter: blur(var(--reading-blur));
+        backdrop-filter: blur(var(--reading-blur));
+        pointer-events: none;
+        will-change: opacity, backdrop-filter;
       }
 
       .site {
@@ -240,8 +247,7 @@
         }
 
         .background-video,
-        .post,
-        .background-shade {
+        .post {
           transition: none;
         }
       }
@@ -331,8 +337,23 @@
     </main>
     <script>
       const backgroundVideo = document.querySelector(".background-video");
+      const backgroundShade = document.querySelector(".background-shade");
+      let readingFrame;
+
       const updateReadingMode = () => {
-        document.body.classList.toggle("is-reading", window.scrollY > 72);
+        if (readingFrame) {
+          return;
+        }
+
+        readingFrame = requestAnimationFrame(() => {
+          const progress = Math.min(window.scrollY / 360, 1);
+          backgroundShade.style.setProperty("--reading-darkness", progress);
+          backgroundShade.style.setProperty(
+            "--reading-blur",
+            `${progress * 12}px`,
+          );
+          readingFrame = undefined;
+        });
       };
 
       const revealBackgroundVideo = () => {
