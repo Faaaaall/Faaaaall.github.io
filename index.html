@@ -35,34 +35,48 @@
         font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
       }
 
-      .background-poster,
-      .background-video,
       .background-shade {
         position: fixed;
         inset: 0;
         pointer-events: none;
       }
 
-      .background-poster {
-        z-index: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        background: var(--page);
-      }
-
-      .background-video {
+      .banner-stage {
+        position: fixed;
         z-index: 1;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        background: var(--page);
-        opacity: 0;
-        transition: opacity 180ms ease;
+        top: 50%;
+        left: 50%;
+        width: max(100vw, calc(100vh * 16 / 9));
+        height: auto;
+        aspect-ratio: 16 / 9;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
       }
 
-      .background-video.is-ready {
-        opacity: 1;
+      .banner-ascii {
+        position: absolute;
+        z-index: 1;
+        top: 1.85%;
+        left: 50%;
+        margin: 0;
+        padding: max(0.833333vw, 1.481481vh);
+        transform: translateX(-50%);
+        background: transparent !important;
+        color: #fff;
+        font-family: "Courier New", Courier, monospace;
+        font-size: max(1.25vw, 2.222222vh);
+        line-height: 1.17;
+        white-space: pre;
+      }
+
+      .banner-eye {
+        position: absolute;
+        z-index: 2;
+        top: 24.259259%;
+        left: 50%;
+        width: 20.3125%;
+        height: auto;
+        transform: translateX(-50%);
       }
 
       .background-shade {
@@ -264,7 +278,6 @@
           scroll-behavior: auto;
         }
 
-        .background-video,
         .post {
           transition: none;
         }
@@ -272,24 +285,16 @@
     </style>
   </head>
   <body>
-    <img
-      class="background-poster"
-      src="assets/background-poster.jpg"
-      alt=""
-      aria-hidden="true"
-    />
-    <video
-      class="background-video"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="auto"
-      poster="assets/background-poster.jpg"
-      aria-hidden="true"
-    >
-      <source src="assets/background.mp4" type="video/mp4" />
-    </video>
+    <div class="banner-stage" aria-hidden="true">
+      <pre class="banner-ascii"><span style="color:#AAAAAA">  </span><span style="color:#5555FF">▄▄█▀▄</span><span style="color:#AAAAAA">          </span><span style="color:#5555FF">▀</span><span style="color:#5555FF;background-color:#0000AA">██▓</span><span style="color:#AAAAAA"> </span><span style="color:#5555FF">▀</span><span style="color:#5555FF;background-color:#0000AA">██▓</span><span style="color:#AAAAAA"> </span>
+<span style="color:#555555">▄</span><span style="color:#5555FF;background-color:#0000AA">▓</span><span style="color:#5555FF">██</span><span style="color:#AAAAAA"> </span><span style="color:#5555FF">▐█▌</span><span style="color:#AAAAAA">           </span><span style="color:#5555FF;background-color:#0000AA">█▒</span><span style="color:#AAAAAA">   </span><span style="color:#5555FF;background-color:#0000AA">█▒</span><span style="color:#AAAAAA"> </span>
+<span style="color:#AAAAAA"> </span><span style="color:#555555">▄</span><span style="color:#5555FF">▀</span><span style="color:#5555FF;background-color:#0000AA">▒</span><span style="color:#AAAAAA">  </span><span style="color:#5555FF">▀</span><span style="color:#AAAAAA">  </span><span style="color:#5555FF">▄</span><span style="color:#5555FF;background-color:#0000AA">▓</span><span style="color:#5555FF">▀▀▄</span><span style="color:#AAAAAA"> </span><span style="color:#5555FF">▄</span><span style="color:#AAAAAA">  </span><span style="color:#5555FF">▐█</span><span style="color:#5555FF;background-color:#0000AA">░</span><span style="color:#AAAAAA">  </span><span style="color:#5555FF">▐█</span><span style="color:#5555FF;background-color:#0000AA">░</span><span style="color:#AAAAAA"> </span>
+<span style="color:#AAAAAA"> </span><span style="color:#555555">▐</span><span style="color:#555555;background-color:#AAAAAA">▓</span><span style="color:#555555">▄▌▄</span><span style="color:#AAAAAA">     </span><span style="color:#5555FF">▄▄■█</span><span style="color:#5555FF;background-color:#0000AA">▓</span><span style="color:#AAAAAA">  </span><span style="color:#5555FF">▐█</span><span style="color:#AAAAAA">   </span><span style="color:#5555FF">▐█</span><span style="color:#AAAAAA">  </span>
+<span style="color:#AAAAAA"> </span><span style="color:#555555">▐</span><span style="color:#555555;background-color:#AAAAAA">█</span><span style="color:#555555">█</span><span style="color:#AAAAAA">    </span><span style="color:#5555FF">▄▀█▀</span><span style="color:#AAAAAA">  </span><span style="color:#555555">▄</span><span style="color:#5555FF">▀</span><span style="color:#AAAAAA">  </span><span style="color:#5555FF">▀</span><span style="color:#555555">▄█</span><span style="color:#AAAAAA">  </span><span style="color:#5555FF">▀</span><span style="color:#555555">▄█</span><span style="color:#AAAAAA"> </span>
+<span style="color:#AAAAAA"> </span><span style="color:#555555">▐██▌</span><span style="color:#AAAAAA">   </span><span style="color:#555555">▄</span><span style="color:#555555;background-color:#AAAAAA">▓</span><span style="color:#555555">▌</span><span style="color:#AAAAAA">   </span><span style="color:#555555">█▓▌</span><span style="color:#AAAAAA"> </span><span style="color:#555555;background-color:#AAAAAA">▓</span><span style="color:#555555">██▌</span><span style="color:#AAAAAA"> </span><span style="color:#555555;background-color:#AAAAAA">▓</span><span style="color:#555555">██▌</span>
+<span style="color:#AAAAAA"> </span><span style="color:#555555">██▓█</span><span style="color:#AAAAAA">   </span><span style="color:#555555">▀██▓▄■▀▀■</span><span style="color:#AAAAAA"> </span><span style="color:#555555">██▓▌</span><span style="color:#AAAAAA"> </span><span style="color:#555555">██▓▌</span></pre>
+      <img class="banner-eye" src="assets/banner-eye.gif" alt="" />
+    </div>
     <div class="background-shade" aria-hidden="true"></div>
 
     <main class="site">
@@ -359,7 +364,6 @@
       aria-label="Abrir conteúdo oculto"
     ></a>
     <script>
-      const backgroundVideo = document.querySelector(".background-video");
       const backgroundShade = document.querySelector(".background-shade");
       let readingFrame;
 
@@ -378,33 +382,6 @@
           readingFrame = undefined;
         });
       };
-
-      const revealBackgroundVideo = () => {
-        backgroundVideo.classList.add("is-ready");
-      };
-
-      const startBackgroundVideo = () => {
-        backgroundVideo.muted = true;
-        const playback = backgroundVideo.play();
-
-        if (playback) {
-          playback.then(revealBackgroundVideo).catch(() => {
-            // A imagem de capa continua visível se o navegador bloquear autoplay.
-          });
-        }
-      };
-
-      backgroundVideo.addEventListener("playing", revealBackgroundVideo, {
-        once: true,
-      });
-
-      if (backgroundVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-        startBackgroundVideo();
-      } else {
-        backgroundVideo.addEventListener("canplay", startBackgroundVideo, {
-          once: true,
-        });
-      }
 
       updateReadingMode();
       window.addEventListener("scroll", updateReadingMode, { passive: true });
